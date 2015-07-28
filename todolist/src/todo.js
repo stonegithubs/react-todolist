@@ -4,10 +4,13 @@ var ToDoItem = React.createClass({
   },
 
   handleClick: function() {
+    var checkbox = React.findDOMNode(this.refs.checkbox);
     if (this.state.done) {
       this.setState({done: false});
+      checkbox.checked = false;
     } else {
       this.setState({done: true});
+      checkbox.checked = true;
     }
   },
 
@@ -21,7 +24,10 @@ var ToDoItem = React.createClass({
     }
 
     return (
-        <li style={liStyle} key={this.props.i} onClick={this.handleClick}>{this.props.value}</li>
+      <li style={liStyle} key={this.props.key} onClick={this.handleClick}>
+        <input type="checkbox" ref="checkbox" />
+        {this.props.value}
+      </li>
     );
   }
 });
@@ -34,7 +40,7 @@ var ToDoList = React.createClass({
   render: function() {
     var toDoList = this.props.data.map(function (item, i){
       return (
-        <ToDoItem value={item.text} i={i} />
+        <ToDoItem value={item.text} key={i} />
       );
     });
 
